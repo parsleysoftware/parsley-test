@@ -2,7 +2,9 @@ package data
 
 object Model {
   case class User(id: Int, name: String, email: String, password: String)
+  // Upstream defines the parent account, if exists
   case class Account(id: Int, name: String, subscription: String, upstream: Option[Int])
+  // Downsteam = true means that the user has access to the downstream accounts of the account they are assigned to, if any
   case class UserAccount(id: Int, user: Int, account: Int, active: Boolean, downstreamAccess: Boolean)
 
   val users = Seq(
@@ -41,10 +43,13 @@ object Model {
     UserAccount(7, 7, 9, true, false),
     UserAccount(8, 8, 5, true, false),
     UserAccount(9, 9, 10, true, false),
-    UserAccount(10, 10, 4, true, false)
+    UserAccount(10, 10, 4, true, false),
+    UserAccount(11, 1, 2, true, false),
+    UserAccount(12, 2, 1, true, true)
   )
 
   case class Environment(users: Seq[User], accounts: Seq[Account], userAccounts: Seq[UserAccount])
 
   val environment = Environment(users, accounts, userAccounts)
+
 }
